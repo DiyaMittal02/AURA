@@ -12,6 +12,10 @@
 | :---: | :---: | :---: |
 | ![AURA Hero](./screenshots/hero.png) | ![AURA Quiz](./screenshots/quiz1.png) | ![AURA Scanner](./screenshots/scanner.png) |
 
+| Persona Result | Palette Details | Capsule Wardrobe |
+| :---: | :---: | :---: |
+| ![Persona](./screenshots/persona_result.png) | ![Palette](./screenshots/palette_details.png) | ![Wardrobe](./screenshots/capsule_wardrobe.png) |
+
 ---
 
 ## 🌟 Overview
