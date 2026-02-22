@@ -6,6 +6,12 @@
 [![React](https://img.shields.io/badge/React-2023-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://reactjs.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-AI-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)](https://pytorch.org/)
 
+## 📱 Application Preview
+
+| Landing Page | Style DNA Quiz | Palette Scanner |
+| :---: | :---: | :---: |
+| ![AURA Hero](./screenshots/hero.png) | ![AURA Quiz](./screenshots/quiz1.png) | ![AURA Scanner](./screenshots/scanner.png) |
+
 ---
 
 ## 🌟 Overview
