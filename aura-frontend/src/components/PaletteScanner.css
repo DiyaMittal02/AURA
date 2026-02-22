@@ -1,0 +1,20 @@
+.camera-view {
+  /* Step 1: Create the circular frame */
+  width: 320px;
+  height: 320px;
+  border-radius: 50%; /* This makes the div a circle */
+  overflow: hidden;    /* This is the magic! It clips anything outside the circle */
+  position: relative;
+  border: 5px solid white; /* This adds the white ring from your screenshot */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Optional: adds a nice shadow */
+  background-color: #f0f0f0; /* Fallback color while camera loads */
+}
+
+/* Step 2: Make the content fill the circular frame */
+.camera-view img,
+.camera-view video {
+  width: 100%;
+  height: 100%;
+  /* This ensures the video fills the circle without being stretched or squashed */
+  object-fit: cover;
+}

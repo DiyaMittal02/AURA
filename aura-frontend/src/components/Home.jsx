@@ -55,7 +55,7 @@ const Home = () => {
                 <div className="home-options">
                     <Link to="/quiz" className="cta-button">Take the Style Quiz</Link>
                     <button onClick={handlePinterestSignIn} className="cta-button pinterest-button">
-                        Analyze My Pinterest
+                        Analyze MoodBoard
                     </button>
                 </div>
             </div>

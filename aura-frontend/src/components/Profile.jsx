@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react"; // Import useRef
 import { createPortal } from "react-dom";
 import { useLocation, useNavigate } from "react-router-dom";
+import html2canvas from 'html2canvas'; // Import html2canvas
 import "./Feed.css";
 
 const paletteDetailsMap = {
@@ -159,6 +160,7 @@ const Profile = () => {
   const [persona, setPersona] = useState(null);
   const [step, setStep] = useState(0);
   const [showPaletteDetails, setShowPaletteDetails] = useState(false);
+  const cardRef = useRef(); // Ref for the profile card
 
   useEffect(() => {
     if (showPaletteDetails) {
@@ -202,6 +204,55 @@ const Profile = () => {
     navigate("/feed", { state: { persona } });
   };
 
+  const handleShare = async () => {
+    if (cardRef.current) {
+      try {
+        const canvas = await html2canvas(cardRef.current, {
+          useCORS: true, // Important if your card has images from other domains
+          scale: 2, // Capture at a higher resolution for better quality
+          logging: true, // For debugging html2canvas issues
+        });
+        const image = canvas.toDataURL("image/png");
+
+        // Option 1: Download the image
+        const link = document.createElement('a');
+        link.href = image;
+        link.download = `Myntra_AURA_${persona.fusedPersona.replace(/\s/g, '_')}.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        // Option 2 (Advanced): Web Share API - for direct sharing on mobile/desktop
+        // This only works in secure contexts (HTTPS) and with user gesture
+        if (navigator.share) {
+          try {
+            const file = await fetch(image)
+              .then(res => res.blob())
+              .then(blob => new File([blob], `Myntra_AURA_${persona.fusedPersona.replace(/\s/g, '_')}.png`, { type: 'image/png' }));
+
+            await navigator.share({
+              files: [file],
+              title: `My Myntra AURA: ${persona.fusedPersona}!`,
+              text: `Check out my unique style identity on Myntra AURA: ${persona.fusedPersona}! #MyntraAURA #StylePersona`,
+            });
+            console.log('Shared successfully');
+          } catch (shareError) {
+            console.error('Error sharing:', shareError);
+            // Fallback to download if Web Share API fails or is not available
+            alert('Sharing failed or not supported. The image has been downloaded!');
+          }
+        } else {
+          // Fallback if Web Share API is not available
+          alert('Image downloaded! You can now share it on your favorite social media.');
+        }
+
+      } catch (error) {
+        console.error("Error capturing card:", error);
+        alert("Could not capture image for sharing. Please try again.");
+      }
+    }
+  };
+
   if (!persona) {
     return (
       <div className="page-center results-bg" style={{ minHeight: "100vh" }}>
@@ -230,7 +281,7 @@ const Profile = () => {
 
         {/* Final Result */}
         {step === 3 && (
-          <div className="wrapped-card final-result fade-in">
+          <div className="wrapped-card final-result fade-in" ref={cardRef}>
             <h3 className="logo-small">AURA</h3>
             <h1>{persona.fusedPersona}</h1>
 
@@ -258,6 +309,17 @@ const Profile = () => {
                 onClick={() => setShowPaletteDetails(true)}
               >
                 Show Palette Details
+              </button>
+              <button
+                className="cta-button share-button" // Add a class for potential styling
+                onClick={handleShare}
+                style={{
+                  background: '#FFDAB9', // Changed to a lighter shade (Peach Puff)
+                  borderColor: '#FFDAB9',
+                  color: '#333', // Darker text for contrast
+                }}
+              >
+                Share My AURA
               </button>
             </div>
           </div>
